@@ -7,6 +7,8 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Storage;
 use App\Models\producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 
 class productosController extends Controller
 {
@@ -17,6 +19,7 @@ class productosController extends Controller
      */
     public function index(Request $request)
     {
+
         $keyword = $request->get('search');
         $perPage = 25;
 
@@ -59,6 +62,7 @@ class productosController extends Controller
                 ->store('uploads', 'public');
         }
 
+        $requestData = Arr::add($requestData,'cliente_id',Auth::user()->id);
         producto::create($requestData);
 
         return redirect('productos')->with('flash_message', 'producto added!');
@@ -73,9 +77,9 @@ class productosController extends Controller
      */
     public function show($id)
     {
-        $producto = producto::findOrFail($id);
-
-        return view('productos.show', compact('producto'));
+        $keyword = $id;
+        $productos = producto::where('cliente_id','like',"%$keyword%")->paginate(5);
+        return view('productos.index', compact('productos'));
     }
 
     /**

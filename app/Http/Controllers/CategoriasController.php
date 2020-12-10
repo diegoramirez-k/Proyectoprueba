@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Categoria;
+use App\Models\producto;
 use Illuminate\Http\Request;
 
 class CategoriasController extends Controller
@@ -72,9 +73,10 @@ class CategoriasController extends Controller
      */
     public function show($id)
     {
-        $categoria = Categoria::findOrFail($id);
+        $keyword = $id;
+        $productos = producto::where('categoria_id','like',"%$keyword%")->paginate(5);
+        return view('productos.index', compact('productos'));
 
-        return view('categorias.show', compact('categoria'));
     }
 
     /**

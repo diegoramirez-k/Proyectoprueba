@@ -51,15 +51,40 @@
   <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Avalon</a>
-  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+  {{--<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+--}}
 
-  <ul class="navbar-nav px-3">
+                    <!-- Left Side Of Navbar -->
+
+                    <!-- Right Side Of Navbar -->
+<ul class="navbar-nav px-4">
     <li class="nav-item text-nowrap">
-      <a class="nav-link" href="/login">Cerrar sesión</a>
+
+       @guest
+                            @if (Route::has('login') and Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link"  href="{{ route('login') }}">{{ __('Login') }}</a> <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+
+                            @endif
+
+
+                        @else
+                            <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Cerrar sesión
+                                </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                        @endguest
     </li>
   </ul>
+
 </nav>
 <div class="container">
         <div class="row">

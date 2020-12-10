@@ -5,7 +5,7 @@
         <div class="row">
 
  @include('layout.sidebar')
-            <div class="col-md-15">
+            <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">Crear Nueva Categoria</div>
                     <div class="card-body">
